@@ -36,7 +36,8 @@
       passages: shuffle(Array.from({ length: n }, function (_, i) { return i; })),
       order: ROUNDS.map(function (r) { return shuffle(r.variants.map(function (_, i) { return i; })); }),
       results: ROUNDS.map(function () { return []; }),
-      winners: [], answer: null, ease: null, t0: 0, ms: 0, optOrder: null
+      winners: [], answer: null, ease: null, t0: 0, ms: 0, optOrder: null,
+      share: { state: 'ask', dys: 'Prefer not to say' }
     };
   }
 
@@ -93,8 +94,8 @@
       '<li>' + T('After each text you rate how easy it felt. Both your speed and your comfort count.', 'Después de cada texto indicas qué tan fácil te resultó. Cuentan tanto tu velocidad como tu comodidad.') + '</li>' +
       '<li>' + T('At the end you get your settings, ready to copy into DyslexiaAway.', 'Al final recibes tus ajustes, listos para copiar en DyslexiaAway.') + '</li>' +
       '</ol>' +
-      '<p class="small muted">' + T('Use the device you normally read on, in a quiet moment. This is not a dyslexia test or a diagnosis — it only compares text styles for you. Nothing is sent anywhere; results stay in your browser.',
-        'Usa el dispositivo en que lees normalmente, en un momento tranquilo. Esto no es un test de dislexia ni un diagnóstico: solo compara estilos de texto para ti. No se envía nada; los resultados quedan en tu navegador.') + '</p>' +
+      '<p class="small muted">' + T('Use the device you normally read on, in a quiet moment. This is not a dyslexia test or a diagnosis — it only compares text styles for you. Your results stay in your browser; at the end you can choose to share them anonymously.',
+        'Usa el dispositivo en que lees normalmente, en un momento tranquilo. Esto no es un test de dislexia ni un diagnóstico: solo compara estilos de texto para ti. Tus resultados quedan en tu navegador; al final puedes elegir compartirlos de forma anónima.') + '</p>' +
       '<button class="btn" data-act="begin">' + T('Begin the test', 'Comenzar la prueba') + '</button></div>';
   }
 
@@ -176,12 +177,70 @@
       '<div class="card da-card" id="daResult"></div></div>' +
       (close ? '<div class="note"><p>' + T('Some options were very close. Small differences can be noise — try the close ones again in the playground, or retake the test on another day.',
         'Algunas opciones quedaron muy parejas. Diferencias pequeñas pueden ser ruido: prueba las más parejas en el probador o repite la prueba otro día.') + '</p></div>' : '') +
+      shareCard() +
       '<div class="btn-row" style="margin:1.25rem 0"><a class="btn" href="index.html">' + T('Fine-tune in the playground', 'Afinar en el probador') + '</a>' +
       '<a class="btn ghost" href="extension.html#setup">' + T('Set up DyslexiaAway', 'Configurar DyslexiaAway') + '</a>' +
       '<button class="btn ghost" data-act="restart">' + T('Take the test again', 'Repetir la prueba') + '</button></div>' +
       '<details class="card"><summary><strong>' + T('Round-by-round details', 'Detalle por ronda') + '</strong></summary>' + rows +
       '<p class="small muted">' + T('Score = 60% relative reading speed (×0.75 if the question was answered wrong) + 40% your ease rating. Readings faster than 600 words per minute are treated as skimmed.',
         'Puntaje = 60 % velocidad de lectura relativa (×0,75 si la pregunta se respondió mal) + 40 % tu nota de facilidad. Lecturas de más de 600 palabras por minuto se consideran saltadas.') + '</p></details>';
+  }
+
+  /* ---------- Optional anonymous sharing (opt-in) ----------
+     Answers go to a Google Form owned by the site author. Only the options
+     picked, reading speeds, ease ratings, language and device type are sent:
+     no name, no email, no free text. Values must match the form's choices. */
+  var FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdV2ugKmMYyz9_GZDT_1h1lb5E8EiCgKMLD7HH8wso2XdKClg/formResponse';
+  var ENTRY = { lang: 'entry.836909325', font: 'entry.1583997910', spacing: 'entry.878805186', line: 'entry.1537700215',
+    size: 'entry.29104906', dyslexia: 'entry.598039293', device: 'entry.1974565502', details: 'entry.272849477', version: 'entry.1217212956' };
+  var DYS = [['Diagnosed', 'Yes, diagnosed', 'Sí, diagnosticada'], ['Suspected', 'I think so', 'Creo que sí'],
+    ['No', 'No', 'No'], ['Prefer not to say', 'Prefer not to say', 'Prefiero no decir']];
+  // Canonical (English) labels, independent of the UI language.
+  function canon(roundId, v) {
+    if (roundId === 'font') return RL.fonts[v.font].label;
+    if (roundId === 'spacing') return v.letter === 0 ? 'Normal' : v.letter < 0.1 ? 'Moderate' : 'Wide';
+    if (roundId === 'line') return RL.fmt.line(v.line);
+    return v.size + ' px';
+  }
+  function shareData() {
+    var d = new URLSearchParams();
+    var details = { v: 1, rounds: {} };
+    ROUNDS.forEach(function (r, i) {
+      d.append(ENTRY[r.id === 'line' ? 'line' : r.id], canon(r.id, r.variants[st.winners[i].vi]));
+      details.rounds[r.id] = st.results[i].map(function (x) {
+        return { opt: canon(r.id, r.variants[x.vi]), wpm: x.wpm, ease: x.ease, correct: x.correct, skim: x.skim };
+      });
+    });
+    d.append(ENTRY.lang, RL.lang);
+    d.append(ENTRY.dyslexia, st.share.dys);
+    d.append(ENTRY.device, (matchMedia('(pointer: coarse)').matches || innerWidth < 760) ? 'Mobile' : 'Desktop');
+    d.append(ENTRY.details, JSON.stringify(details));
+    d.append(ENTRY.version, '1');
+    return d;
+  }
+  function sendShare() {
+    st.share.state = 'sending';
+    fetch(FORM, { method: 'POST', mode: 'no-cors', body: shareData() })
+      .then(function () { st.share.state = 'sent'; }, function () { st.share.state = 'error'; })
+      .then(render);
+  }
+  function shareCard() {
+    var sh = st.share;
+    if (sh.state === 'declined') return '';
+    var head = '<h3 style="margin-top:0">' + T('Help us learn what works for people', 'Ayúdanos a saber qué le funciona a la gente') + '</h3>';
+    if (sh.state === 'sent') return '<div class="card" style="margin-top:1rem">' + head + '<p style="margin:0">' + T('Thank you! Your anonymous result was shared.', '¡Gracias! Tu resultado anónimo se compartió.') + '</p></div>';
+    var dys = DYS.map(function (o) {
+      return '<button class="btn ghost" data-act="dys" data-v="' + o[0] + '" aria-pressed="' + (sh.dys === o[0]) + '">' + T(o[1], o[2]) + '</button>';
+    }).join('');
+    return '<div class="card" style="margin-top:1rem">' + head +
+      '<p>' + T('Share your result anonymously? We would save only the options you tried and picked, your reading speeds and ratings, the site language and whether you used a phone or a computer. No name, no email, nothing that identifies you.',
+        '¿Compartes tu resultado de forma anónima? Solo guardaríamos las opciones que probaste y elegiste, tus velocidades y notas, el idioma del sitio y si usaste un celular o un computador. Sin nombre, sin correo, nada que te identifique.') + '</p>' +
+      '<p class="small" style="margin-bottom:.4rem"><strong>' + T('Optional: do you have dyslexia?', 'Opcional: ¿tienes dislexia?') + '</strong></p>' +
+      '<div class="btn-row" role="group">' + dys + '</div>' +
+      (sh.state === 'error' ? '<p class="small" style="color:var(--warn)">' + T('Could not send. Check your connection and try again.', 'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.') + '</p>' : '') +
+      '<div class="btn-row" style="margin-top:1rem"><button class="btn" data-act="share"' + (sh.state === 'sending' ? ' disabled' : '') + '>' +
+      (sh.state === 'sending' ? T('Sending…', 'Enviando…') : T('Share anonymously', 'Compartir anónimamente')) + '</button>' +
+      '<button class="btn ghost" data-act="noshare">' + T('No thanks', 'No, gracias') + '</button></div></div>';
   }
 
   function previewStyle(s) {
@@ -214,6 +273,9 @@
       else { st.screen = 'results'; RL.saveSettings(finalSettings()); }
     }
     else if (act === 'restart') { reset(); }
+    else if (act === 'dys') { st.share.dys = b.dataset.v; render(); return; }
+    else if (act === 'noshare') { st.share.state = 'declined'; render(); return; }
+    else if (act === 'share') { sendShare(); render(); return; }
     render();
     var top = root.getBoundingClientRect().top + window.scrollY - 80;
     if (window.scrollY > top) window.scrollTo(0, Math.max(0, top));
