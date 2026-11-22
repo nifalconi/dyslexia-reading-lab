@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-title-en="Reading Lab — test text spacing for dyslexia" data-title-es="Laboratorio de lectura — prueba el espaciado del texto para dislexia">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading Lab — test text spacing for dyslexia</title>
+<meta name="description" content="Try fonts, letter spacing, word spacing and line height to find text that is easier to read. In English and Spanish.">
+<script>(function(){var d=document.documentElement,q=new URLSearchParams(location.search).get('lang');try{if(q)localStorage.setItem('rl.lang',q);var l=q||localStorage.getItem('rl.lang')||((navigator.language||'en').toLowerCase().indexOf('es')===0?'es':'en');d.lang=l==='es'?'es':'en';d.dataset.theme=localStorage.getItem('rl.theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch(e){d.dataset.theme='light';}})();</script>
+<link rel="preload" href="assets/fonts/AtkinsonHyperlegibleNext-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js" defer></script>
+<script src="assets/playground.js" defer></script>
+</head>
+<body data-page="try">
+<a class="skip" href="#main"><span data-lang="en">Skip to content</span><span data-lang="es">Saltar al contenido</span></a>
+<header id="site-header"></header>
+
+<main id="main">
+  <p class="eyebrow"><span data-lang="en">Reading Lab</span><span data-lang="es">Laboratorio de lectura</span></p>
+  <h1>
+    <span data-lang="en">See how spacing changes the way text reads</span>
+    <span data-lang="es">Mira cómo el espaciado cambia la lectura</span>
+  </h1>
+  <p class="lede">
+    <span data-lang="en">For many people with dyslexia, spacing matters more than picking a special font. Move the sliders, read the text, and keep what feels easiest. Then copy your values into the free <a href="extension.html">DyslexiaAway</a> extension so every website looks like this.</span>
+    <span data-lang="es">Para muchas personas con dislexia, el espaciado importa más que elegir una fuente especial. Mueve los controles, lee el texto y quédate con lo que te resulte más fácil. Después copia tus valores en la extensión gratuita <a href="extension.html">DyslexiaAway</a> para que todas las páginas web se vean así.</span>
+  </p>
+
+  <div class="playground">
+    <div class="pg-col pg-left">
+    <section class="card" aria-labelledby="preview-title">
+      <div class="panel-head">
+        <h2 id="preview-title"><span data-lang="en">See how the text looks</span><span data-lang="es">Prueba cómo se ve el texto</span></h2>
+        <span class="badge"><span data-lang="en">Interactive</span><span data-lang="es">Interactivo</span></span>
+      </div>
+      <div class="stage" id="stage" data-bg="dark" contenteditable="true" spellcheck="false" aria-label="Sample text (editable)"></div>
+      <div class="stage-tools">
+        <div class="swatches" role="group" aria-label="Background">
+          <span class="small muted"><span data-lang="en">Background</span><span data-lang="es">Fondo</span></span>
+          <button type="button" class="swatch" data-bg="dark" aria-pressed="true"><span class="skip">Dark</span></button>
+          <button type="button" class="swatch" data-bg="cream" aria-pressed="false"><span class="skip">Cream</span></button>
+          <button type="button" class="swatch" data-bg="white" aria-pressed="false"><span class="skip">White</span></button>
+        </div>
+        <span class="small muted">
+          <span data-lang="en">Tip: click the text and paste your own.</span>
+          <span data-lang="es">Tip: haz clic en el texto y pega el tuyo.</span>
+          <button type="button" class="chip-btn" id="resetText"><span data-lang="en">Restore text</span><span data-lang="es">Restaurar texto</span></button>
+        </span>
+      </div>
+    </section>
+    <section class="card da-card" id="daCard" aria-live="polite"></section>
+    </div>
+
+    <div class="pg-col">
+      <section class="card" aria-label="Controls">
+        <fieldset>
+          <legend><span data-lang="en">Font</span><span data-lang="es">Tipografía</span></legend>
+          <div class="font-options" id="fontOptions"></div>
+        </fieldset>
+
+        <div class="control">
+          <label class="control-label" for="letter"><span><span data-lang="en">Letter spacing</span><span data-lang="es">Espaciado entre letras</span></span><span class="value" id="letterVal"></span></label>
+          <input type="range" id="letter" min="0" max="0.2" step="0.01">
+        </div>
+        <div class="control">
+          <label class="control-label" for="word"><span><span data-lang="en">Word spacing</span><span data-lang="es">Espaciado entre palabras</span></span><span class="value" id="wordVal"></span></label>
+          <input type="range" id="word" min="0" max="0.8" step="0.01">
+        </div>
+        <div class="control">
+          <label class="control-label" for="line"><span><span data-lang="en">Line height</span><span data-lang="es">Interlineado</span></span><span class="value" id="lineVal"></span></label>
+          <input type="range" id="line" min="1" max="2" step="0.05">
+        </div>
+        <div class="control">
+          <label class="control-label" for="size"><span><span data-lang="en">Text size</span><span data-lang="es">Tamaño de letra</span></span><span class="value" id="sizeVal"></span></label>
+          <input type="range" id="size" min="12" max="32" step="1">
+        </div>
+        <button type="button" class="btn ghost block" id="reset"><span data-lang="en">Reset to recommended values</span><span data-lang="es">Restablecer valores recomendados</span></button>
+        <p class="small muted" style="margin:.8rem 0 0">
+          <span data-lang="en">These are starting points to experiment with, not a scientifically proven setting for everyone. <a href="guide.html">Why these values?</a></span>
+          <span data-lang="es">Son puntos de partida para experimentar, no una configuración demostrada científicamente para todo el mundo. <a href="guide.html">¿Por qué estos valores?</a></span>
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <section class="prose" style="margin-top:2.5rem">
+    <h2 style="margin-top:0"><span data-lang="en">Not sure what to pick?</span><span data-lang="es">¿No sabes qué elegir?</span></h2>
+    <ol>
+      <li data-lang="en"><a href="test.html"><strong>Take the 5-minute reading test.</strong></a> You read short texts in different styles; it times you and asks how easy each felt, then suggests your settings.</li>
+      <li data-lang="es"><a href="test.html"><strong>Haz la prueba de lectura de 5 minutos.</strong></a> Lees textos cortos con distintos estilos; mide tu tiempo y te pregunta qué tan fácil fue cada uno, y al final te sugiere tus ajustes.</li>
+      <li data-lang="en"><a href="extension.html"><strong>Install DyslexiaAway</strong></a> (Chrome, Edge, Firefox) and copy the values from the box above.</li>
+      <li data-lang="es"><a href="extension.html"><strong>Instala DyslexiaAway</strong></a> (Chrome, Edge, Firefox) y copia los valores del recuadro de arriba.</li>
+      <li data-lang="en"><a href="guide.html"><strong>Read the guide</strong></a> to learn what the research says about spacing, fonts and size.</li>
+      <li data-lang="es"><a href="guide.html"><strong>Lee la guía</strong></a> para saber qué dice la investigación sobre espaciado, fuentes y tamaño.</li>
+    </ol>
+  </section>
+</main>
+
+<footer id="site-footer"></footer>
+</body>
+</html>

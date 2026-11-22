@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en" data-title-en="Guide & research: spacing, fonts and dyslexia — Reading Lab" data-title-es="Guía e investigación: espaciado, fuentes y dislexia — Laboratorio de lectura">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide & research: spacing, fonts and dyslexia — Reading Lab</title>
+<meta name="description" content="What the research says about letter spacing, word spacing, line height, font size and 'dyslexia fonts', with references.">
+<script>(function(){var d=document.documentElement,q=new URLSearchParams(location.search).get('lang');try{if(q)localStorage.setItem('rl.lang',q);var l=q||localStorage.getItem('rl.lang')||((navigator.language||'en').toLowerCase().indexOf('es')===0?'es':'en');d.lang=l==='es'?'es':'en';d.dataset.theme=localStorage.getItem('rl.theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch(e){d.dataset.theme='light';}})();</script>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js" defer></script>
+</head>
+<body data-page="guide">
+<a class="skip" href="#main"><span data-lang="en">Skip to content</span><span data-lang="es">Saltar al contenido</span></a>
+<header id="site-header"></header>
+
+<main id="main">
+<article class="prose">
+
+<!-- ================= ENGLISH ================= -->
+<div data-lang="en">
+  <p class="eyebrow">Guide &amp; research</p>
+  <h1>Spacing, fonts and dyslexia: what helps, and how sure we are</h1>
+  <p class="lede">Short version: spacing and size are worth adjusting, “dyslexia fonts” mostly are not, and the best setting is personal — so test it.</p>
+  <ul class="toc">
+    <li><a href="#en-start">Where to start</a></li>
+    <li><a href="#en-spacing">The 3 kinds of spacing</a></li>
+    <li><a href="#en-fonts">Fonts</a></li>
+    <li><a href="#en-size">Size &amp; line length</a></li>
+    <li><a href="#en-research">The studies</a></li>
+    <li><a href="#en-limits">What this can’t do</a></li>
+    <li><a href="#en-refs">References</a></li>
+  </ul>
+
+  <h2 id="en-start">Where to start</h2>
+  <p>These values are a sensible starting point to experiment with, not a setting proven to be best for everyone.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Setting</th><th>Start with</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Font</td><td>Verdana or Lexend (any clear sans-serif you like)</td><td>Sans-serif, upright fonts read better than italic or serif ones [8, 9]. No special font beats ordinary ones on average [6].</td></tr>
+      <tr><td>Size</td><td>18 px or more</td><td>Larger text improved reading for readers with dyslexia [10, 11].</td></tr>
+      <tr><td>Line height</td><td>1.5</td><td>Recommended by the British Dyslexia Association and the WCAG accessibility standard [13, 14].</td></tr>
+      <tr><td>Letter spacing</td><td>+0.04 em (about +0.5 to +1 px at 18 px), up to 0.12 em</td><td>Extra letter spacing reduced errors in several studies [1, 2].</td></tr>
+      <tr><td>Word spacing</td><td>+0.16 em — always increase it together with letter spacing</td><td>Wider letters without wider word gaps can slow reading [3].</td></tr>
+      <tr><td>Alignment</td><td>Left, never justified</td><td>Justified text creates uneven gaps between words [13].</td></tr>
+      <tr><td>Line length</td><td>60–75 characters</td><td>Shorter lines helped some readers with dyslexia [12].</td></tr>
+      <tr><td>Style</td><td>Avoid italics, underlining and ALL CAPS for long text</td><td>They make letters run together [13]. Italic fonts slowed readers with dyslexia [8].</td></tr>
+    </tbody>
+  </table></div>
+  <p><a class="btn" href="index.html">Try these values</a> <a class="btn ghost" href="test.html">Find my own values</a></p>
+
+  <h2 id="en-spacing">The three kinds of spacing</h2>
+  <h3>1. Line height: space between lines</h3>
+  <p>The vertical distance between one line and the next. Around 1.5 helps your eyes find where one line ends and the next one starts.</p>
+  <div class="demo-pair">
+    <div class="demo" style="line-height:1"><span class="tag">Line height 1.0 — tight</span>Reading is a skill we can make easier with small changes to how the text is laid out on the page.</div>
+    <div class="demo" style="line-height:1.5"><span class="tag">Line height 1.5 — more air</span>Reading is a skill we can make easier with small changes to how the text is laid out on the page.</div>
+  </div>
+  <h3>2. Letter spacing: space between letters</h3>
+  <p>Also called <em>tracking</em>. A little extra space between characters reduces “crowding” — when nearby letters get in the way of recognising each one. This is the setting with the most interesting evidence (see <a href="#en-research">the studies</a>), but the effect is not the same for everyone, and too much spacing makes reading harder again [13].</p>
+  <div class="demo-pair">
+    <div class="demo"><span class="tag">Normal</span>Reading is a skill we can make easier with small changes.</div>
+    <div class="demo" style="letter-spacing:.08em;word-spacing:.2em"><span class="tag">Extra letter + word spacing</span>Reading is a skill we can make easier with small changes.</div>
+  </div>
+  <h3>3. Word spacing: space between words</h3>
+  <p>If you add space between letters, add space between words too, so words don’t blur into each other. The British Dyslexia Association suggests that the gap between words should be at least 3.5 times the gap between letters [13]. One study found that wider letter spacing <em>without</em> wider word spacing actually slowed reading down [3].</p>
+  <div class="demo-pair">
+    <div class="demo" style="letter-spacing:.12em"><span class="tag">Wide letters, normal word gaps</span>Reading is a skill we can make easier with small changes.</div>
+    <div class="demo" style="letter-spacing:.12em;word-spacing:.35em"><span class="tag">Wide letters, wider word gaps</span>Reading is a skill we can make easier with small changes.</div>
+  </div>
+
+  <h2 id="en-fonts">Fonts: do “dyslexia fonts” work?</h2>
+  <p>Fonts such as <strong>OpenDyslexic</strong> and <strong>Dyslexie</strong> were designed with heavier letter bottoms and unusual shapes to stop letters “flipping”. Controlled studies have not found that they help: children read no faster or more accurately with them than with Arial or Times New Roman [4, 5, 7], and a 2026 meta-analysis of 15 studies (688 readers) found an overall effect of almost exactly zero [6]. When the extra spacing built into Dyslexie was matched in Arial, its small advantage disappeared [4] — suggesting the <em>spacing</em>, not the letter shapes, was doing the work.</p>
+  <p><strong>Lexend</strong> takes a different approach: its letters are wide and widely spaced, and it comes in versions with more or less spacing so the reader can choose. Its creator’s demonstration with 20 third-grade students reported that 17 of 19 read more words correctly per minute in at least one Lexend version than in Times New Roman [15]. That is a small, non-peer-reviewed demonstration, so treat it as promising, not proven.</p>
+  <p><strong>Atkinson Hyperlegible</strong> (designed by the Braille Institute for low vision) and <strong>Andika</strong> (designed for beginning readers) make similar-looking letters such as b/d and I/l/1 easier to tell apart.</p>
+  <p><strong>What this means for you:</strong> pick a clear, upright sans-serif you <em>like</em> reading. Comfort matters — you will read more if it feels good — but don’t expect a font alone to change your reading. Spending time on spacing and size is likely to pay off more.</p>
+
+  <h2 id="en-size">Size and line length</h2>
+  <p>In an eye-tracking study with 28 readers with dyslexia, font size made a clear difference to reading and comprehension, and the authors recommended at least 18 points [10]. A larger study with 104 readers on Wikipedia found readability kept improving up to 18–22 points [11]. Very long lines are also harder to follow: high-school students with dyslexia read more efficiently with very short lines on a small screen, especially those with weaker visual attention [12].</p>
+  <p>Browsers start at 16 px. You can raise the default size in your browser settings (see the <a href="extension.html#setup">setup guide</a>) or use zoom (Ctrl/⌘ and +).</p>
+
+  <h2 id="en-research">The studies, one by one</h2>
+  <div class="finding">
+    <h3>Extra-large letter spacing improves reading in dyslexia <span class="verdict good">positive</span></h3>
+    <p class="who">Zorzi et al., 2012 — 74 Italian and French children with dyslexia [1]</p>
+    <p>With extra space between letters (and between words), children read about 20% faster and made about half as many errors, with no training. The explanation: people with dyslexia are more affected by visual crowding.</p>
+  </div>
+  <div class="finding">
+    <h3>The benefit is in accuracy, and not only for dyslexia <span class="verdict">mixed</span></h3>
+    <p class="who">Hakvoort et al., 2017 — 30 children with dyslexia, 30 controls, then 189 unselected children [2]</p>
+    <p>Extra letter spacing reduced errors for children with <em>and</em> without dyslexia, but did not make anyone read faster. The effect only appeared when reading full sentences.</p>
+  </div>
+  <div class="finding">
+    <h3>Letter spacing needs word spacing; letter shapes did nothing <span class="verdict">mixed</span></h3>
+    <p class="who">Galliussi et al., 2020 — 64 children with and 64 without dyslexia [3]</p>
+    <p>A “dyslexia-friendly” letterform had no effect. More space between letters <em>without</em> more space between words made reading slower.</p>
+  </div>
+  <div class="finding">
+    <h3>Special dyslexia fonts don’t help on average <span class="verdict weak">no benefit</span></h3>
+    <p class="who">Wery &amp; Diliberto, 2017 [7]; Kuster et al., 2018 — 170 + 147 children [5]; Marinus et al., 2016 [4]; Azzarello et al., 2026 meta-analysis [6]</p>
+    <p>OpenDyslexic and Dyslexie did not improve speed or accuracy compared with Arial or Times New Roman. Most children preferred the ordinary fonts, and preference was not linked to performance — which is one reason to <a href="test.html">measure</a> rather than rely on how a font looks.</p>
+  </div>
+  <div class="finding">
+    <h3>Sans-serif, upright fonts beat italics <span class="verdict good">positive</span></h3>
+    <p class="who">Rello &amp; Baeza-Yates, 2013 and 2016 — 48 readers with dyslexia, then 97 readers [8, 9]</p>
+    <p>Sans-serif, monospaced and roman (upright) fonts were read faster than serif, proportional and italic ones. Italic reduced performance.</p>
+  </div>
+
+  <h2 id="en-limits">What this can — and can’t — do</h2>
+  <div class="note">
+    <p>Changing how text looks can make reading <strong>less tiring</strong> and reduce some errors. It does not treat dyslexia. Dyslexia is mainly a difficulty with linking sounds and letters, and the approaches with the strongest evidence are structured, explicit reading instruction and support such as text-to-speech and extra time.</p>
+    <p>This site is not a diagnosis. If you think you or your child might be dyslexic, the British Dyslexia Association has <a href="https://www.bdadyslexia.org.uk/dyslexia/how-is-dyslexia-diagnosed/dyslexia-checklists">free checklists</a> as a first step [16]; a formal assessment is done by a qualified specialist (an educational psychologist or specialist teacher).</p>
+  </div>
+</div>
+
+<!-- ================= ESPAÑOL ================= -->
+<div data-lang="es">
+  <p class="eyebrow">Guía e investigación</p>
+  <h1>Espaciado, fuentes y dislexia: qué ayuda y qué tan seguro es</h1>
+  <p class="lede">En corto: vale la pena ajustar el espaciado y el tamaño; las “fuentes para dislexia”, en general, no; y la mejor configuración es personal, así que pruébala.</p>
+  <ul class="toc">
+    <li><a href="#es-start">Por dónde empezar</a></li>
+    <li><a href="#es-spacing">Los 3 tipos de espaciado</a></li>
+    <li><a href="#es-fonts">Fuentes</a></li>
+    <li><a href="#es-size">Tamaño y largo de línea</a></li>
+    <li><a href="#es-research">Los estudios</a></li>
+    <li><a href="#es-limits">Lo que esto no hace</a></li>
+    <li><a href="#es-refs">Referencias</a></li>
+  </ul>
+
+  <h2 id="es-start">Por dónde empezar</h2>
+  <p>Estos valores son un buen punto de partida para experimentar, no una configuración demostrada como la mejor para todo el mundo.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Ajuste</th><th>Valor inicial</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>Fuente</td><td>Verdana o Lexend (o cualquier sans-serif clara que te guste)</td><td>Las fuentes sans-serif y rectas se leen mejor que las cursivas o con serifa [8, 9]. Ninguna fuente especial supera a las comunes en promedio [6].</td></tr>
+      <tr><td>Tamaño</td><td>18 px o más</td><td>El texto más grande mejoró la lectura en personas con dislexia [10, 11].</td></tr>
+      <tr><td>Interlineado</td><td>1,5</td><td>Lo recomiendan la British Dyslexia Association y el estándar de accesibilidad WCAG [13, 14].</td></tr>
+      <tr><td>Espacio entre letras</td><td>+0,04 em (unos +0,5 a +1 px con 18 px), hasta 0,12 em</td><td>El espacio extra entre letras redujo errores en varios estudios [1, 2].</td></tr>
+      <tr><td>Espacio entre palabras</td><td>+0,16 em; súbelo siempre junto con el de letras</td><td>Separar letras sin separar palabras puede hacer la lectura más lenta [3].</td></tr>
+      <tr><td>Alineación</td><td>A la izquierda, nunca justificada</td><td>El texto justificado deja espacios desiguales entre palabras [13].</td></tr>
+      <tr><td>Largo de línea</td><td>60–75 caracteres</td><td>Las líneas más cortas ayudaron a algunas personas con dislexia [12].</td></tr>
+      <tr><td>Estilo</td><td>Evita cursiva, subrayado y MAYÚSCULAS en textos largos</td><td>Hacen que las letras se junten [13]. La cursiva hizo más lenta la lectura en personas con dislexia [8].</td></tr>
+    </tbody>
+  </table></div>
+  <p><a class="btn" href="index.html">Probar estos valores</a> <a class="btn ghost" href="test.html">Encontrar mis valores</a></p>
+
+  <h2 id="es-spacing">Los tres tipos de espaciado</h2>
+  <h3>1. Interlineado: espacio entre líneas</h3>
+  <p>Es la distancia vertical entre una línea de texto y la siguiente. Un interlineado de 1,5 ayuda a distinguir dónde termina una línea y dónde empieza la otra.</p>
+  <div class="demo-pair">
+    <div class="demo" style="line-height:1"><span class="tag">Interlineado 1,0 — compacto</span>La lectura es una habilidad que podemos facilitar con pequeños cambios en el diseño del texto en la página.</div>
+    <div class="demo" style="line-height:1.5"><span class="tag">Interlineado 1,5 — más aire</span>La lectura es una habilidad que podemos facilitar con pequeños cambios en el diseño del texto en la página.</div>
+  </div>
+  <h3>2. Espaciado entre letras</h3>
+  <p>También se llama <em>tracking</em> o <em>letter spacing</em>. Un poco de espacio extra entre caracteres reduce el “amontonamiento” (<em>crowding</em>): cuando las letras vecinas estorban para reconocer cada una. Es el ajuste con la evidencia más interesante (ver <a href="#es-research">los estudios</a>), pero el efecto no es igual para todos, y demasiado espacio vuelve a dificultar la lectura [13].</p>
+  <div class="demo-pair">
+    <div class="demo"><span class="tag">Normal</span>La lectura es una habilidad que podemos facilitar.</div>
+    <div class="demo" style="letter-spacing:.08em;word-spacing:.2em"><span class="tag">Más espacio entre letras y palabras</span>La lectura es una habilidad que podemos facilitar.</div>
+  </div>
+  <h3>3. Espaciado entre palabras</h3>
+  <p>Si separas las letras, separa también las palabras, para que no se confundan unas con otras. La British Dyslexia Association sugiere que el espacio entre palabras sea al menos 3,5 veces el espacio entre letras [13]. Un estudio encontró que aumentar el espacio entre letras <em>sin</em> aumentar el de palabras hacía la lectura más lenta [3].</p>
+  <div class="demo-pair">
+    <div class="demo" style="letter-spacing:.12em"><span class="tag">Letras separadas, palabras normales</span>La lectura es una habilidad que podemos facilitar.</div>
+    <div class="demo" style="letter-spacing:.12em;word-spacing:.35em"><span class="tag">Letras y palabras separadas</span>La lectura es una habilidad que podemos facilitar.</div>
+  </div>
+
+  <h2 id="es-fonts">Fuentes: ¿funcionan las “fuentes para dislexia”?</h2>
+  <p>Fuentes como <strong>OpenDyslexic</strong> y <strong>Dyslexie</strong> se diseñaron con la base de las letras más gruesa y formas poco comunes para que las letras no “se den vuelta”. Los estudios controlados no han encontrado que ayuden: los niños no leyeron más rápido ni con menos errores que con Arial o Times New Roman [4, 5, 7], y un metaanálisis de 2026 con 15 estudios (688 lectores) encontró un efecto global prácticamente nulo [6]. Cuando se le dio a Arial el mismo espaciado extra que trae Dyslexie, su pequeña ventaja desapareció [4]: lo que ayudaba era el <em>espaciado</em>, no la forma de las letras.</p>
+  <p><strong>Lexend</strong> sigue otro enfoque: sus letras son anchas y muy espaciadas, y tiene versiones con más o menos espacio para que cada persona elija. En la demostración de su creadora con 20 estudiantes de tercero básico, 17 de 19 leyeron más palabras correctas por minuto con al menos una versión de Lexend que con Times New Roman [15]. Es una demostración pequeña y sin revisión de pares: prometedora, no demostrada.</p>
+  <p><strong>Atkinson Hyperlegible</strong> (creada por el Braille Institute para baja visión) y <strong>Andika</strong> (pensada para quienes aprenden a leer) hacen más fácil distinguir letras parecidas como b/d e I/l/1.</p>
+  <p><strong>Qué significa para ti:</strong> elige una sans-serif clara y recta que te <em>guste</em> leer. La comodidad importa (vas a leer más si te resulta agradable), pero no esperes que una fuente por sí sola cambie tu lectura. Dedicarle tiempo al espaciado y al tamaño probablemente rinda más.</p>
+
+  <h2 id="es-size">Tamaño y largo de línea</h2>
+  <p>En un estudio con seguimiento ocular a 28 personas con dislexia, el tamaño de letra marcó una diferencia clara en la lectura y la comprensión, y los autores recomendaron al menos 18 puntos [10]. Un estudio más grande, con 104 lectores en Wikipedia, encontró que la legibilidad seguía mejorando hasta 18–22 puntos [11]. Las líneas muy largas también cuestan más: estudiantes de secundaria con dislexia leyeron con más eficiencia con líneas muy cortas en una pantalla pequeña, sobre todo quienes tenían menor atención visual [12].</p>
+  <p>Los navegadores parten en 16 px. Puedes subir el tamaño predeterminado en la configuración del navegador (ver la <a href="extension.html#setup">guía de configuración</a>) o usar el zoom (Ctrl/⌘ y +).</p>
+
+  <h2 id="es-research">Los estudios, uno por uno</h2>
+  <div class="finding">
+    <h3>El espaciado extra entre letras mejora la lectura en la dislexia <span class="verdict good">positivo</span></h3>
+    <p class="who">Zorzi y colaboradores, 2012 — 74 niños italianos y franceses con dislexia [1]</p>
+    <p>Con más espacio entre letras (y entre palabras), los niños leyeron cerca de un 20 % más rápido y cometieron cerca de la mitad de errores, sin entrenamiento previo. La explicación: las personas con dislexia se ven más afectadas por el amontonamiento visual.</p>
+  </div>
+  <div class="finding">
+    <h3>La mejora está en la precisión, y no solo en la dislexia <span class="verdict">mixto</span></h3>
+    <p class="who">Hakvoort y colaboradores, 2017 — 30 niños con dislexia, 30 sin dislexia y luego 189 niños sin seleccionar [2]</p>
+    <p>El espaciado extra redujo los errores en niños con <em>y</em> sin dislexia, pero no hizo que nadie leyera más rápido. El efecto solo apareció al leer oraciones completas.</p>
+  </div>
+  <div class="finding">
+    <h3>El espacio entre letras necesita espacio entre palabras; la forma de las letras no influyó <span class="verdict">mixto</span></h3>
+    <p class="who">Galliussi y colaboradores, 2020 — 64 niños con dislexia y 64 sin dislexia [3]</p>
+    <p>Una forma de letra “para dislexia” no tuvo efecto. Más espacio entre letras <em>sin</em> más espacio entre palabras hizo la lectura más lenta.</p>
+  </div>
+  <div class="finding">
+    <h3>Las fuentes especiales para dislexia no ayudan en promedio <span class="verdict weak">sin beneficio</span></h3>
+    <p class="who">Wery y Diliberto, 2017 [7]; Kuster y colaboradores, 2018 — 170 + 147 niños [5]; Marinus y colaboradores, 2016 [4]; metaanálisis de Azzarello y colaboradores, 2026 [6]</p>
+    <p>OpenDyslexic y Dyslexie no mejoraron la velocidad ni la precisión frente a Arial o Times New Roman. La mayoría de los niños prefirió las fuentes comunes, y la preferencia no se relacionó con el rendimiento. Por eso conviene <a href="test.html">medir</a> en vez de fiarse de cómo se ve una fuente.</p>
+  </div>
+  <div class="finding">
+    <h3>Las fuentes sans-serif y rectas superan a la cursiva <span class="verdict good">positivo</span></h3>
+    <p class="who">Rello y Baeza-Yates, 2013 y 2016 — 48 lectores con dislexia y luego 97 lectores [8, 9]</p>
+    <p>Las fuentes sans-serif, monoespaciadas y rectas (redondas) se leyeron más rápido que las con serifa, proporcionales y cursivas. La cursiva empeoró el rendimiento.</p>
+  </div>
+
+  <h2 id="es-limits">Lo que esto puede y no puede hacer</h2>
+  <div class="note">
+    <p>Cambiar cómo se ve el texto puede hacer la lectura <strong>menos cansadora</strong> y reducir algunos errores. No trata la dislexia. La dislexia es principalmente una dificultad para relacionar sonidos y letras, y lo que tiene más evidencia es la enseñanza de la lectura estructurada y explícita, junto con apoyos como la lectura en voz alta por computador (texto a voz) y más tiempo.</p>
+    <p>Este sitio no es un diagnóstico. Si crees que tú o tu hijo o hija podrían tener dislexia, la British Dyslexia Association tiene <a href="https://www.bdadyslexia.org.uk/dyslexia/how-is-dyslexia-diagnosed/dyslexia-checklists">listas de chequeo gratuitas</a> (en inglés) como primer paso [16]; la evaluación formal la hace un profesional (psicopedagogo/a, psicólogo/a o fonoaudiólogo/a).</p>
+  </div>
+</div>
+
+<!-- ================= REFERENCES (shared) ================= -->
+<h2 id="en-refs"><span data-lang="en">References</span><span data-lang="es" id="es-refs">Referencias</span></h2>
+<ol class="refs">
+  <li>Zorzi, M., Barbiero, C., Facoetti, A., Lonciari, I., Carrozzi, M., Montico, M., Bravar, L., George, F., Pech-Georgel, C., &amp; Ziegler, J. C. (2012). Extra-large letter spacing improves reading in dyslexia. <cite>PNAS, 109</cite>(28), 11455–11459. <a href="https://doi.org/10.1073/pnas.1205566109">doi:10.1073/pnas.1205566109</a></li>
+  <li>Hakvoort, B., van den Boer, M., Leenaars, T., Bos, P., &amp; Tijms, J. (2017). Improvements in reading accuracy as a result of increased interletter spacing are not specific to children with dyslexia. <cite>Journal of Experimental Child Psychology, 164</cite>, 101–116. <a href="https://doi.org/10.1016/j.jecp.2017.07.010">doi:10.1016/j.jecp.2017.07.010</a></li>
+  <li>Galliussi, J., Perondi, L., Chia, G., Gerbino, W., &amp; Bernardis, P. (2020). Inter-letter spacing, inter-word spacing, and font with dyslexia-friendly features: testing text readability in people with and without dyslexia. <cite>Annals of Dyslexia, 70</cite>(1), 141–152. <a href="https://doi.org/10.1007/s11881-020-00194-x">doi:10.1007/s11881-020-00194-x</a></li>
+  <li>Marinus, E., Mostard, M., Segers, E., Schubert, T. M., Madelaine, A., &amp; Wheldall, K. (2016). A special font for people with dyslexia: Does it work and, if so, why? <cite>Dyslexia, 22</cite>(3), 233–244. <a href="https://doi.org/10.1002/dys.1527">doi:10.1002/dys.1527</a></li>
+  <li>Kuster, S. M., van Weerdenburg, M., Gompel, M., &amp; Bosman, A. M. T. (2018). Dyslexie font does not benefit reading in children with or without dyslexia. <cite>Annals of Dyslexia, 68</cite>(1), 25–42. <a href="https://doi.org/10.1007/s11881-017-0154-6">doi:10.1007/s11881-017-0154-6</a></li>
+  <li>Azzarello, C., Paek, S. H., Hodge, C., Jameson, M., &amp; Lewis, J. (2026). Does font improve reading in dyslexic children? Meta-analysis of dyslexia-friendly fonts and dyslexic children’s reading performance. <cite>Annals of Dyslexia, 76</cite>(3), 635–657. <a href="https://doi.org/10.1007/s11881-026-00389-8">doi:10.1007/s11881-026-00389-8</a></li>
+  <li>Wery, J. J., &amp; Diliberto, J. A. (2017). The effect of a specialized dyslexia font, OpenDyslexic, on reading rate and accuracy. <cite>Annals of Dyslexia, 67</cite>(2), 114–127. <a href="https://doi.org/10.1007/s11881-016-0127-1">doi:10.1007/s11881-016-0127-1</a></li>
+  <li>Rello, L., &amp; Baeza-Yates, R. (2013). Good fonts for dyslexia. <cite>Proceedings of ASSETS ’13</cite>, 1–8. ACM. <a href="https://doi.org/10.1145/2513383.2513447">doi:10.1145/2513383.2513447</a></li>
+  <li>Rello, L., &amp; Baeza-Yates, R. (2016). The effect of font type on screen readability by people with dyslexia. <cite>ACM Transactions on Accessible Computing, 8</cite>(4), 1–33. <a href="https://doi.org/10.1145/2897736">doi:10.1145/2897736</a></li>
+  <li>Rello, L., Pielot, M., Marcos, M.-C., &amp; Carlini, R. (2013). Size matters (spacing not): 18 points for a dyslexic-friendly Wikipedia. <cite>Proceedings of W4A ’13</cite>, 1–4. ACM. <a href="https://doi.org/10.1145/2461121.2461125">doi:10.1145/2461121.2461125</a></li>
+  <li>Rello, L., Pielot, M., &amp; Marcos, M.-C. (2016). Make it big! The effect of font size and line spacing on online readability. <cite>Proceedings of CHI ’16</cite>, 3637–3648. ACM. <a href="https://doi.org/10.1145/2858036.2858204">doi:10.1145/2858036.2858204</a></li>
+  <li>Schneps, M. H., Thomson, J. M., Sonnert, G., Pomplun, M., Chen, C., &amp; Heffner-Wong, A. (2013). Shorter lines facilitate reading in those who struggle. <cite>PLoS ONE, 8</cite>(8), e71161. <a href="https://doi.org/10.1371/journal.pone.0071161">doi:10.1371/journal.pone.0071161</a></li>
+  <li>British Dyslexia Association (2023). <cite>Dyslexia Style Guide 2023</cite>. <a href="https://cdn.bdadyslexia.org.uk/uploads/documents/Advice/style-guide/BDA-Style-Guide-2023.pdf">bdadyslexia.org.uk</a></li>
+  <li>W3C (2018). <cite>Understanding Success Criterion 1.4.12: Text Spacing</cite> (WCAG 2.1). <a href="https://www.w3.org/WAI/WCAG21/Understanding/text-spacing.html">w3.org</a></li>
+  <li>Shaver-Troup, B. et al. <cite>Lexend — The demonstration of effectiveness</cite> (project website, not peer-reviewed). <a href="https://www.lexend.com/">lexend.com</a></li>
+  <li>British Dyslexia Association. <cite>Dyslexia checklists</cite>. <a href="https://www.bdadyslexia.org.uk/dyslexia/how-is-dyslexia-diagnosed/dyslexia-checklists">bdadyslexia.org.uk</a></li>
+</ol>
+<p class="small muted"><span data-lang="en">Summaries on this page were written from each paper’s abstract and results. If you spot a mistake, please <a href="https://github.com/nifalconi/dyslexia-reading-lab/issues">open an issue</a>.</span><span data-lang="es">Los resúmenes de esta página se escribieron a partir del resumen y los resultados de cada artículo. Si encuentras un error, <a href="https://github.com/nifalconi/dyslexia-reading-lab/issues">abre un issue</a>.</span></p>
+</article>
+</main>
+
+<footer id="site-footer"></footer>
+</body>
+</html>
