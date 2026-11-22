@@ -37,7 +37,7 @@
       order: ROUNDS.map(function (r) { return shuffle(r.variants.map(function (_, i) { return i; })); }),
       results: ROUNDS.map(function () { return []; }),
       winners: [], answer: null, ease: null, t0: 0, ms: 0, optOrder: null,
-      share: { state: 'ask', dys: 'Prefer not to say' }
+      share: { optIn: st && st.share ? st.share.optIn : true, dys: st && st.share ? st.share.dys : 'Prefer not to say', session: newSession() }
     };
   }
 
@@ -94,8 +94,9 @@
       '<li>' + T('After each text you rate how easy it felt. Both your speed and your comfort count.', 'Después de cada texto indicas qué tan fácil te resultó. Cuentan tanto tu velocidad como tu comodidad.') + '</li>' +
       '<li>' + T('At the end you get your settings, ready to copy into DyslexiaAway.', 'Al final recibes tus ajustes, listos para copiar en DyslexiaAway.') + '</li>' +
       '</ol>' +
-      '<p class="small muted">' + T('Use the device you normally read on, in a quiet moment. This is not a dyslexia test or a diagnosis — it only compares text styles for you. Your results stay in your browser; at the end you can choose to share them anonymously.',
-        'Usa el dispositivo en que lees normalmente, en un momento tranquilo. Esto no es un test de dislexia ni un diagnóstico: solo compara estilos de texto para ti. Tus resultados quedan en tu navegador; al final puedes elegir compartirlos de forma anónima.') + '</p>' +
+      '<p class="small muted">' + T('Use the device you normally read on, in a quiet moment. This is not a dyslexia test or a diagnosis — it only compares text styles for you.',
+        'Usa el dispositivo en que lees normalmente, en un momento tranquilo. Esto no es un test de dislexia ni un diagnóstico: solo compara estilos de texto para ti.') + '</p>' +
+      shareIntro() +
       '<button class="btn" data-act="begin">' + T('Begin the test', 'Comenzar la prueba') + '</button></div>';
   }
 
@@ -177,7 +178,7 @@
       '<div class="card da-card" id="daResult"></div></div>' +
       (close ? '<div class="note"><p>' + T('Some options were very close. Small differences can be noise — try the close ones again in the playground, or retake the test on another day.',
         'Algunas opciones quedaron muy parejas. Diferencias pequeñas pueden ser ruido: prueba las más parejas en el probador o repite la prueba otro día.') + '</p></div>' : '') +
-      shareCard() +
+      (st.share.optIn ? '<p class="small muted">' + T('Your anonymous results were saved. Thank you for helping!', 'Tus resultados anónimos quedaron guardados. ¡Gracias por ayudar!') + '</p>' : '') +
       '<div class="btn-row" style="margin:1.25rem 0"><a class="btn" href="index.html">' + T('Fine-tune in the playground', 'Afinar en el probador') + '</a>' +
       '<a class="btn ghost" href="extension.html#setup">' + T('Set up DyslexiaAway', 'Configurar DyslexiaAway') + '</a>' +
       '<button class="btn ghost" data-act="restart">' + T('Take the test again', 'Repetir la prueba') + '</button></div>' +
@@ -186,15 +187,20 @@
         'Puntaje = 60 % velocidad de lectura relativa (×0,75 si la pregunta se respondió mal) + 40 % tu nota de facilidad. Lecturas de más de 600 palabras por minuto se consideran saltadas.') + '</p></details>';
   }
 
-  /* ---------- Optional anonymous sharing (opt-in) ----------
-     Answers go to a Google Form owned by the site author. Only the options
-     picked, reading speeds, ease ratings, language and device type are sent:
-     no name, no email, no free text. Values must match the form's choices. */
+  /* ---------- Anonymous results ----------
+     After each round, the picks so far are posted to a Google Form owned by
+     the site author, so we also learn from people who stop halfway. Sent:
+     options tried and picked, reading speeds, ease ratings, language, phone or
+     computer, optional self-reported dyslexia and a random per-run session id.
+     No name, email or free text. Readers can opt out on the intro screen.
+     Choice values must match the form's options exactly. */
   var FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdV2ugKmMYyz9_GZDT_1h1lb5E8EiCgKMLD7HH8wso2XdKClg/formResponse';
   var ENTRY = { lang: 'entry.836909325', font: 'entry.1583997910', spacing: 'entry.878805186', line: 'entry.1537700215',
-    size: 'entry.29104906', dyslexia: 'entry.598039293', device: 'entry.1974565502', details: 'entry.272849477', version: 'entry.1217212956' };
+    size: 'entry.29104906', dyslexia: 'entry.598039293', device: 'entry.1974565502', details: 'entry.272849477',
+    version: 'entry.1217212956', session: 'entry.622483805', stage: 'entry.1430363883' };
   var DYS = [['Diagnosed', 'Yes, diagnosed', 'Sí, diagnosticada'], ['Suspected', 'I think so', 'Creo que sí'],
     ['No', 'No', 'No'], ['Prefer not to say', 'Prefer not to say', 'Prefiero no decir']];
+  function newSession() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
   // Canonical (English) labels, independent of the UI language.
   function canon(roundId, v) {
     if (roundId === 'font') return RL.fonts[v.font].label;
@@ -202,11 +208,11 @@
     if (roundId === 'line') return RL.fmt.line(v.line);
     return v.size + ' px';
   }
-  function shareData() {
+  function roundData(upto) {
     var d = new URLSearchParams();
-    var details = { v: 1, rounds: {} };
-    ROUNDS.forEach(function (r, i) {
-      d.append(ENTRY[r.id === 'line' ? 'line' : r.id], canon(r.id, r.variants[st.winners[i].vi]));
+    var details = { v: 2, rounds: {} };
+    ROUNDS.slice(0, upto + 1).forEach(function (r, i) {
+      d.append(ENTRY[r.id], canon(r.id, r.variants[st.winners[i].vi]));
       details.rounds[r.id] = st.results[i].map(function (x) {
         return { opt: canon(r.id, r.variants[x.vi]), wpm: x.wpm, ease: x.ease, correct: x.correct, skim: x.skim };
       });
@@ -215,32 +221,28 @@
     d.append(ENTRY.dyslexia, st.share.dys);
     d.append(ENTRY.device, (matchMedia('(pointer: coarse)').matches || innerWidth < 760) ? 'Mobile' : 'Desktop');
     d.append(ENTRY.details, JSON.stringify(details));
-    d.append(ENTRY.version, '1');
+    d.append(ENTRY.version, '2');
+    d.append(ENTRY.session, st.share.session);
+    d.append(ENTRY.stage, upto === ROUNDS.length - 1 ? 'complete' : ROUNDS[upto].id);
     return d;
   }
-  function sendShare() {
-    st.share.state = 'sending';
-    fetch(FORM, { method: 'POST', mode: 'no-cors', body: shareData() })
-      .then(function () { st.share.state = 'sent'; }, function () { st.share.state = 'error'; })
-      .then(render);
+  function sendRound(upto) {
+    if (!st.share.optIn) return;
+    fetch(FORM, { method: 'POST', mode: 'no-cors', body: roundData(upto), keepalive: true }).catch(function () {});
   }
-  function shareCard() {
+  function shareIntro() {
     var sh = st.share;
-    if (sh.state === 'declined') return '';
-    var head = '<h3 style="margin-top:0">' + T('Help us learn what works for people', 'Ayúdanos a saber qué le funciona a la gente') + '</h3>';
-    if (sh.state === 'sent') return '<div class="card" style="margin-top:1rem">' + head + '<p style="margin:0">' + T('Thank you! Your anonymous result was shared.', '¡Gracias! Tu resultado anónimo se compartió.') + '</p></div>';
     var dys = DYS.map(function (o) {
-      return '<button class="btn ghost" data-act="dys" data-v="' + o[0] + '" aria-pressed="' + (sh.dys === o[0]) + '">' + T(o[1], o[2]) + '</button>';
+      return '<button class="btn ghost" data-act="dys" data-v="' + o[0] + '" aria-pressed="' + (sh.dys === o[0]) + '"' + (sh.optIn ? '' : ' disabled style="opacity:.5"') + '>' + T(o[1], o[2]) + '</button>';
     }).join('');
-    return '<div class="card" style="margin-top:1rem">' + head +
-      '<p>' + T('Share your result anonymously? We would save only the options you tried and picked, your reading speeds and ratings, the site language and whether you used a phone or a computer. No name, no email, nothing that identifies you.',
-        '¿Compartes tu resultado de forma anónima? Solo guardaríamos las opciones que probaste y elegiste, tus velocidades y notas, el idioma del sitio y si usaste un celular o un computador. Sin nombre, sin correo, nada que te identifique.') + '</p>' +
-      '<p class="small" style="margin-bottom:.4rem"><strong>' + T('Optional: do you have dyslexia?', 'Opcional: ¿tienes dislexia?') + '</strong></p>' +
+    return '<div class="note">' +
+      '<p><strong>' + T('Help us learn what works for people.', 'Ayúdanos a saber qué le funciona a la gente.') + '</strong> ' +
+      T('After each round we save your result anonymously: the options you tried and picked, your reading speeds and ratings, the site language and whether you use a phone or a computer. No name, no email, nothing that identifies you.',
+        'Después de cada ronda guardamos tu resultado de forma anónima: las opciones que probaste y elegiste, tus velocidades y notas, el idioma del sitio y si usas celular o computador. Sin nombre, sin correo, nada que te identifique.') + '</p>' +
+      '<p class="small" style="margin:.7rem 0 .4rem"><strong>' + T('Optional: do you have dyslexia?', 'Opcional: ¿tienes dislexia?') + '</strong></p>' +
       '<div class="btn-row" role="group">' + dys + '</div>' +
-      (sh.state === 'error' ? '<p class="small" style="color:var(--warn)">' + T('Could not send. Check your connection and try again.', 'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.') + '</p>' : '') +
-      '<div class="btn-row" style="margin-top:1rem"><button class="btn" data-act="share"' + (sh.state === 'sending' ? ' disabled' : '') + '>' +
-      (sh.state === 'sending' ? T('Sending…', 'Enviando…') : T('Share anonymously', 'Compartir anónimamente')) + '</button>' +
-      '<button class="btn ghost" data-act="noshare">' + T('No thanks', 'No, gracias') + '</button></div></div>';
+      '<label style="display:flex;gap:.5rem;align-items:center;margin-top:.8rem;cursor:pointer"><input type="checkbox" data-act="optout"' + (sh.optIn ? '' : ' checked') +
+      ' style="width:20px;height:20px;accent-color:var(--accent)"> ' + T('Don’t save my results', 'No guardar mis resultados') + '</label></div>';
   }
 
   function previewStyle(s) {
@@ -265,6 +267,7 @@
         var win = scoreRound(st.round);
         st.winners[st.round] = win;
         Object.assign(st.base, c.r.variants[win.vi]);
+        sendRound(st.round);
         st.screen = 'summary';
       } else st.screen = 'ready';
     }
@@ -274,8 +277,7 @@
     }
     else if (act === 'restart') { reset(); }
     else if (act === 'dys') { st.share.dys = b.dataset.v; render(); return; }
-    else if (act === 'noshare') { st.share.state = 'declined'; render(); return; }
-    else if (act === 'share') { sendShare(); render(); return; }
+    else if (act === 'optout') { st.share.optIn = !b.checked; render(); return; }
     render();
     var top = root.getBoundingClientRect().top + window.scrollY - 80;
     if (window.scrollY > top) window.scrollTo(0, Math.max(0, top));

@@ -240,3 +240,6 @@ input[type="range"]::-moz-range-thumb { width: 30px; height: 30px; border-radius
 @media (max-width: 760px) { .result-grid { grid-template-columns: 1fr; } }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.btn.ghost[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
+.note .btn.ghost { border-color: color-mix(in srgb, var(--ink) 30%, transparent); min-height: 40px; padding: .45rem .9rem; }
+.note .btn.ghost[aria-pressed="true"] { border-color: var(--accent); background: var(--surface); }
