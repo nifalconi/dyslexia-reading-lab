@@ -185,16 +185,21 @@
         'Puntaje = 60 % velocidad de lectura relativa (×0,75 si la pregunta se respondió mal) + 40 % tu nota de facilidad. Lecturas de más de 600 palabras por minuto se consideran saltadas.') + '</p></details>';
   }
 
-  /* ---------- Anonymous results ----------
-     After each round, the picks so far are posted to a Google Form owned by
-     the site author, so we also learn from people who stop halfway. Sent:
-     options tried and picked, reading speeds, ease ratings, language, phone or
-     computer and a random per-run session id. No name, email or free text.
+  /* ---------- Anonymous progress log ----------
+     The page saves progress to a Google Form owned by the site author while
+     the visitor uses the test (visitors never see the form). One row is sent
+     when the test starts and one after every text, all sharing a random
+     per-run session id, so the row with the highest progress shows how far that
+     person got: status "incomplete" + progress "6/13" means they stopped
+     after the 6th text; status "complete" means they finished.
+     Sent: options tried, winners of finished rounds, reading speeds, ease
+     ratings, language, phone or computer. No name, email or free text.
      Choice values must match the form's options exactly. */
   var FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdV2ugKmMYyz9_GZDT_1h1lb5E8EiCgKMLD7HH8wso2XdKClg/formResponse';
   var ENTRY = { lang: 'entry.836909325', font: 'entry.1583997910', spacing: 'entry.878805186', line: 'entry.1537700215',
-    size: 'entry.29104906', dyslexia: 'entry.598039293', device: 'entry.1974565502', details: 'entry.272849477',
-    version: 'entry.1217212956', session: 'entry.622483805', stage: 'entry.1430363883' };
+    size: 'entry.29104906', device: 'entry.1974565502', details: 'entry.272849477', version: 'entry.1217212956',
+    session: 'entry.622483805', stage: 'entry.1430363883', status: 'entry.1245744714', progress: 'entry.590062005' };
+  var TOTAL = ROUNDS.reduce(function (a, r) { return a + r.variants.length; }, 0);
   function newSession() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
   // Canonical (English) labels, independent of the UI language.
   function canon(roundId, v) {
@@ -203,26 +208,35 @@
     if (roundId === 'line') return RL.fmt.line(v.line);
     return v.size + ' px';
   }
-  function roundData(upto) {
+  function progressData() {
     var d = new URLSearchParams();
-    var details = { v: 2, rounds: {} };
-    ROUNDS.slice(0, upto + 1).forEach(function (r, i) {
-      d.append(ENTRY[r.id], canon(r.id, r.variants[st.winners[i].vi]));
-      details.rounds[r.id] = st.results[i].map(function (x) {
-        return { opt: canon(r.id, r.variants[x.vi]), wpm: x.wpm, ease: x.ease, correct: x.correct, skim: x.skim };
-      });
+    var details = { v: 3, rounds: {} };
+    var done = 0;
+    ROUNDS.forEach(function (r, i) {
+      if (st.winners[i]) d.append(ENTRY[r.id], canon(r.id, r.variants[st.winners[i].vi]));
+      if (st.results[i].length) {
+        done += st.results[i].length;
+        details.rounds[r.id] = st.results[i].map(function (x) {
+          return { opt: canon(r.id, r.variants[x.vi]), wpm: x.wpm, ease: x.ease, correct: x.correct, skim: x.skim };
+        });
+      }
     });
+    var complete = done === TOTAL;
+    var r = ROUNDS[Math.min(st.round, ROUNDS.length - 1)];
+    d.append(ENTRY.status, complete ? 'complete' : 'incomplete');
+    d.append(ENTRY.progress, done + '/' + TOTAL);
+    d.append(ENTRY.stage, complete ? 'complete' : done === 0 ? 'started' : r.id + ' ' + st.results[st.round].length + '/' + r.variants.length);
     d.append(ENTRY.lang, RL.lang);
     d.append(ENTRY.device, (matchMedia('(pointer: coarse)').matches || innerWidth < 760) ? 'Mobile' : 'Desktop');
     d.append(ENTRY.details, JSON.stringify(details));
-    d.append(ENTRY.version, '2');
+    d.append(ENTRY.version, '3');
     d.append(ENTRY.session, st.share.session);
-    d.append(ENTRY.stage, upto === ROUNDS.length - 1 ? 'complete' : ROUNDS[upto].id);
     return d;
   }
-  function sendRound(upto) {
-    fetch(FORM, { method: 'POST', mode: 'no-cors', body: roundData(upto), keepalive: true }).catch(function () {});
+  function logProgress() {
+    try { fetch(FORM, { method: 'POST', mode: 'no-cors', body: progressData(), keepalive: true }).catch(function () {}); } catch (e) { /* never break the test */ }
   }
+
   function previewStyle(s) {
     return 'font-family:' + RL.fonts[s.font].css.replace(/"/g, "'") + ';letter-spacing:' + s.letter + 'em;word-spacing:' + s.word + 'em;line-height:' + s.line + ';font-size:' + s.size + 'px';
   }
@@ -231,7 +245,7 @@
     var b = e.target.closest('[data-act]');
     if (!b || b.disabled) return;
     var act = b.dataset.act;
-    if (act === 'begin') { st.screen = 'ready'; }
+    if (act === 'begin') { st.screen = 'ready'; logProgress(); }
     else if (act === 'start') { st.screen = 'reading'; st.t0 = performance.now(); }
     else if (act === 'done') { st.ms = performance.now() - st.t0; st.screen = 'question'; st.answer = null; st.ease = null; st.optOrder = null; }
     else if (act === 'answer') { st.answer = +b.dataset.i; }
@@ -245,15 +259,15 @@
         var win = scoreRound(st.round);
         st.winners[st.round] = win;
         Object.assign(st.base, c.r.variants[win.vi]);
-        sendRound(st.round);
         st.screen = 'summary';
       } else st.screen = 'ready';
+      logProgress();
     }
     else if (act === 'continue') {
       if (st.round < ROUNDS.length - 1) { st.round++; st.trial = 0; st.screen = 'ready'; }
       else { st.screen = 'results'; RL.saveSettings(finalSettings()); }
     }
-    else if (act === 'restart') { reset(); }
+    else if (act === 'restart') { reset(); }  // new session id; logs again on 'begin'
     render();
     var top = root.getBoundingClientRect().top + window.scrollY - 80;
     if (window.scrollY > top) window.scrollTo(0, Math.max(0, top));
