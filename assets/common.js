@@ -155,8 +155,8 @@
     if (!f) return;
     f.className = 'site-footer';
     f.innerHTML = '<div class="inner">' +
-      '<span data-lang="en">A free, open-source reading aid. Not a diagnosis or treatment. The only thing sent anywhere is your anonymous test result, and you can opt out before starting. Fonts under the SIL Open Font License. </span>' +
-      '<span data-lang="es">Una ayuda de lectura gratuita y de código abierto. No es un diagnóstico ni un tratamiento. Lo único que se envía es tu resultado anónimo de la prueba, y puedes desactivarlo antes de empezar. Fuentes bajo la licencia SIL Open Font License. </span>' +
+      '<span data-lang="en">A free, open-source reading aid. Not a diagnosis or treatment. The only thing recorded is anonymous test results (options, reading speeds, ratings). Fonts under the SIL Open Font License. </span>' +
+      '<span data-lang="es">Una ayuda de lectura gratuita y de código abierto. No es un diagnóstico ni un tratamiento. Lo único que se registra son resultados anónimos de la prueba (opciones, velocidades, notas). Fuentes bajo la licencia SIL Open Font License. </span>' +
       '<a href="' + REPO + '">GitHub</a></div>';
   }
 

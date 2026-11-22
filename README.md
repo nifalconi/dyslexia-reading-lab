@@ -17,7 +17,7 @@ A small, bilingual (English / Spanish) website for people with dyslexia — or a
 
 - Values use **em**, the same unit DyslexiaAway uses, so they copy across exactly.
 - Fonts (Lexend, Atkinson Hyperlegible Next, Andika, OpenDyslexic) are self-hosted under the SIL Open Font License — no Google Fonts, no tracking, no cookies. Settings are kept in `localStorage`.
-- **Anonymous results:** after each round of the test, the picks so far, reading speeds and ratings (plus optional self-reported dyslexia, language, phone/computer and a random per-run session id) are posted to a Google Form owned by the author. Visitors see a notice and can opt out on the intro screen. Rows with `stage = complete` are finished tests.
+- **Anonymous results:** after each round of the test, the picks so far, reading speeds and ratings (plus language, phone/computer and a random per-run session id) are posted automatically to a Google Form owned by the author, like analytics. A one-line notice in the test intro and footer says so. Rows with `stage = complete` are finished tests.
 - Plain HTML/CSS/JS, no build step. Language: `?lang=es` or the EN · ES toggle.
 - Not a diagnostic tool.
 
