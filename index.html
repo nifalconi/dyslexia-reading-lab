@@ -7,9 +7,9 @@
 <meta name="description" content="Try fonts, letter spacing, word spacing and line height to find text that is easier to read. In English and Spanish.">
 <script>(function(){var d=document.documentElement,q=new URLSearchParams(location.search).get('lang');try{if(q)localStorage.setItem('rl.lang',q);var l=q||localStorage.getItem('rl.lang')||((navigator.language||'en').toLowerCase().indexOf('es')===0?'es':'en');d.lang=l==='es'?'es':'en';d.dataset.theme=localStorage.getItem('rl.theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch(e){d.dataset.theme='light';}})();</script>
 <link rel="preload" href="assets/fonts/AtkinsonHyperlegibleNext-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/style.css?v=5">
-<script src="assets/common.js?v=5" defer></script>
-<script src="assets/playground.js?v=5" defer></script>
+<link rel="stylesheet" href="assets/style.css?v=6">
+<script src="assets/common.js?v=6" defer></script>
+<script src="assets/playground.js?v=6" defer></script>
 </head>
 <body data-page="try">
 <a class="skip" href="#main"><span data-lang="en">Skip to content</span><span data-lang="es">Saltar al contenido</span></a>
@@ -34,10 +34,11 @@
         <span class="badge"><span data-lang="en">Interactive</span><span data-lang="es">Interactivo</span></span>
       </div>
       <div class="stage" id="stage" data-bg="dark" contenteditable="true" spellcheck="false" aria-label="Sample text (editable)"></div>
-      <p class="small muted" style="margin:.5rem 0 0">
-        <span data-lang="en">Gabriel García Márquez, <cite>One Hundred Years of Solitude</cite> (trans. Gregory Rabassa).</span>
-        <span data-lang="es">Gabriel García Márquez, <cite>Cien años de soledad</cite>.</span>
-      </p>
+      <div class="sample-bar">
+        <span class="small muted"><span data-lang="en">Other texts to try</span><span data-lang="es">Otros textos para probar</span></span>
+        <div class="samples" id="samples" role="group" aria-label="Sample text"></div>
+      </div>
+      <p class="small muted" id="sampleCredit" style="margin:.4rem 0 0"></p>
       <div class="stage-tools">
         <div class="swatches" role="group" aria-label="Background">
           <span class="small muted"><span data-lang="en">Background</span><span data-lang="es">Fondo</span></span>
@@ -48,7 +49,6 @@
         <span class="small muted">
           <span data-lang="en">Tip: click the text and paste your own.</span>
           <span data-lang="es">Tip: haz clic en el texto y pega el tuyo.</span>
-          <button type="button" class="chip-btn" id="resetText"><span data-lang="en">Restore text</span><span data-lang="es">Restaurar texto</span></button>
         </span>
       </div>
     </section>

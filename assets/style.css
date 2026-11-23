@@ -243,3 +243,8 @@ input[type="range"]::-moz-range-thumb { width: 30px; height: 30px; border-radius
 .btn.ghost[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
 .note .btn.ghost { border-color: color-mix(in srgb, var(--ink) 30%, transparent); min-height: 40px; padding: .45rem .9rem; }
 .note .btn.ghost[aria-pressed="true"] { border-color: var(--accent); background: var(--surface); }
+
+/* Sample text picker */
+.sample-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-top: .9rem; }
+.samples { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); font-weight: 700; }
