@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   var RL = (window.RL = {});
-  var KEY = { lang: 'rl.lang', theme: 'rl.theme', settings: 'rl.settings' };
+  var KEY = { lang: 'rl.langChoice', theme: 'rl.theme', settings: 'rl.settings' };
   var REPO = 'https://github.com/nifalconi/dyslexia-reading-lab';
   RL.REPO = REPO;
   RL.DA = {
@@ -20,7 +20,9 @@
   RL.setLang = function (lang) {
     RL.lang = lang === 'es' ? 'es' : 'en';
     document.documentElement.lang = RL.lang;
-    store(KEY.lang, RL.lang);
+    store(KEY.lang, RL.lang);  // a manual choice beats the browser language on later visits
+    var u = new URL(location.href);
+    if (u.searchParams.has('lang')) { u.searchParams.delete('lang'); history.replaceState(null, '', u); }
     var title = document.documentElement.getAttribute('data-title-' + RL.lang);
     if (title) document.title = title;
     renderHeader();

@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guide & research: spacing, fonts and dyslexia — Reading Lab</title>
 <meta name="description" content="What the research says about letter spacing, word spacing, line height, font size and 'dyslexia fonts', with references.">
-<script>(function(){var d=document.documentElement,q=new URLSearchParams(location.search).get('lang');try{if(q)localStorage.setItem('rl.lang',q);var l=q||localStorage.getItem('rl.lang')||((navigator.language||'en').toLowerCase().indexOf('es')===0?'es':'en');d.lang=l==='es'?'es':'en';d.dataset.theme=localStorage.getItem('rl.theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch(e){d.dataset.theme='light';}})();</script>
-<link rel="stylesheet" href="assets/style.css?v=11">
-<script src="assets/common.js?v=11" defer></script>
+<script>(function(){var d=document.documentElement,L=['en','es'],q=new URLSearchParams(location.search).get('lang'),c=null,t=null;try{c=localStorage.getItem('rl.langChoice');t=localStorage.getItem('rl.theme');}catch(e){}var b=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'']).map(function(x){return String(x).slice(0,2).toLowerCase();}).filter(function(x){return L.indexOf(x)>=0;})[0];var l=[q,c,b].filter(function(x){return L.indexOf(x)>=0;})[0]||'en';d.lang=l;d.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');})();</script>
+<link rel="stylesheet" href="assets/style.css?v=12">
+<script src="assets/common.js?v=12" defer></script>
 </head>
 <body data-page="guide">
 <a class="skip" href="#main"><span data-lang="en">Skip to content</span><span data-lang="es">Saltar al contenido</span></a>
