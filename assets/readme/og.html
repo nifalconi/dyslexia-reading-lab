@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Source for og-image.png (link previews in Slack, WhatsApp, X…). Render at 1200×630. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("../fonts/AtkinsonHyperlegibleNext-VariableFont_wght.woff2") format("woff2"); font-weight: 200 800; }
+@font-face { font-family: "Lexend"; src: url("../fonts/Lexend-VariableFont_wght.woff2") format("woff2"); font-weight: 100 900; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1200px; height: 630px; overflow: hidden; }
+body {
+  background: #111110; color: #ece8e1; font-family: "Atkinson Hyperlegible Next", sans-serif;
+  padding: 64px 72px; position: relative; display: flex; flex-direction: column;
+}
+body::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 8px; background: #5cc8b8; }
+.brand { display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 26px; }
+.mark { width: 50px; height: 50px; border-radius: 12px; background: #5cc8b8; color: #0b1b19; display: grid; place-items: center; font-size: 22px; }
+h1 { font-size: 64px; line-height: 1.08; font-weight: 800; margin-top: 30px; }
+h1 span { color: #5cc8b8; }
+.demo { margin-top: auto; display: grid; gap: 14px; }
+.row { background: #1a1a19; border: 1px solid #2e2d2a; border-radius: 14px; padding: 14px 24px; display: flex; align-items: baseline; gap: 22px; }
+.tag { font-size: 15px; color: #8f897f; letter-spacing: .08em; text-transform: uppercase; width: 150px; flex: none; }
+.txt { font-family: Verdana, sans-serif; font-size: 27px; white-space: nowrap; overflow: hidden; }
+.tight .txt { font-family: "Times New Roman", serif; letter-spacing: -.03em; word-spacing: -.08em; color: #bdb7ad; }
+.open { border-color: #5cc8b8; }
+.open .tag { color: #5cc8b8; }
+.open .txt { font-family: "Lexend", sans-serif; letter-spacing: .05em; word-spacing: .2em; }
+</style>
+</head>
+<body>
+  <div class="brand"><span class="mark">Aa</span>Reading Lab</div>
+  <h1>Find text that is<br><span>easier to read</span></h1>
+  <div class="demo">
+    <div class="row tight"><span class="tag">Default</span><span class="txt">I’m sorry you have to sit here on the ice</span></div>
+    <div class="row open"><span class="tag">Your settings</span><span class="txt">I’m sorry you have to sit here on the ice</span></div>
+  </div>
+</body>
+</html>
